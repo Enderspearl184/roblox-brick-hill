@@ -1,12 +1,13 @@
-const port=42481 //change this to the second port you have forwarded.
+const port=42481; //change this to the second port you have forwarded.
 
 
-const http=getModule("http")
-const color=require("./../node_modules/node-hill/dist/util/color/colorModule.js").default
-const hex=require("./../node_modules/node-hill/dist/util/color/formatHex.js")
+const http=getModule("http");
+const color=require("./../node_modules/node-hill/dist/util/color/colorModule.js").default;
+const hex=require("./../node_modules/node-hill/dist/util/color/formatHex.js");
 
-var chatMessages=[]
+var chatMessages=[];
 var ghostPlayerEdits=[];
+
 Game.on("playerJoin", (p) => {
 	p.on("chatted", (m) => {
 		chatMessages.push({netId: p.netId, chat: `[${p.username}]: ${m}`})
@@ -15,54 +16,50 @@ Game.on("playerJoin", (p) => {
 })
 
 http.createServer(function (req, res) {
-	if (req.url=="/POSTplayerValues") {
-		if (req.method!=="POST") return postrequest(res)
-
+	if (req.url!=="/POSTplayerValues") return notfound(res);
+	if (req.method!=="POST") return postrequest(res);
         let body = '';
        	req.on('data', chunk => {
-         		body += chunk.toString();
-       	});
-       	req.on('end', () => {
-			let robloxjson = JSON.parse(body)
-			if (Array.isArray(robloxjson.players) && Array.isArray(robloxjson.chat)) {
-				handleFakePlayers(robloxjson)
-				
-				res.writeHead(200, {'Content-Type': 'application/json'});
-				var playerinfo={
-					players: [],
-					chat: chatMessages,
-					ghostPlayerEdits: ghostPlayerEdits
+      	   	body += chunk.toString();
+      	});
+	req.on('end', () => {
+		let robloxjson = JSON.parse(body);
+		if (Array.isArray(robloxjson.players) && Array.isArray(robloxjson.chat)) {
+			handleFakePlayers(robloxjson);
+			
+			res.writeHead(200, {'Content-Type': 'application/json'});
+			var playerinfo={
+			players: [],
+				chat: chatMessages,
+				ghostPlayerEdits: ghostPlayerEdits,
+				bricks: getBricks()
+			};
+			chatMessages=[];
+			ghostPlayerEdits=[];
+			for (let players of Game.players) {
+				let playervar={
+					username: players.username,
+					netId: players.netId,
+					score: players.score,
+					position: {x: players.position.x, y: players.position.z, z: players.position.y},
+					rotation:players.rotation.z,
+					colors: {
+						head:players.colors.head,
+						torso: players.colors.torso,
+						leftLeg: players.colors.leftLeg,
+						rightLeg: players.colors.rightLeg,
+						leftArm: players.colors.leftArm,
+						rightArm: players.colors.rightArm
+					},
+					health:{maxHealth: players.maxHealth, Health: players.health}
 				};
-				chatMessages=[];
-				ghostPlayerEdits=[];
-				for (let players of Game.players) {
-					let playervar={
-						username: players.username,
-						netId: players.netId,
-						score: players.score,
-						position: {x: players.position.x, y: players.position.z, z: players.position.y},
-						rotation:players.rotation.z,
-						colors: {
-							head:players.colors.head,
-							torso: players.colors.torso,
-							leftLeg: players.colors.leftLeg,
-							rightLeg: players.colors.rightLeg,
-							leftArm: players.colors.leftArm,
-							rightArm: players.colors.rightArm
-						},
-						health:{maxHealth: players.maxHealth, Health: players.health}
-					};
-					playerinfo.players.push(playervar);
-				};
-				res.end(JSON.stringify(playerinfo));
-			} else {
-				return badRequest(res)
-			}
-		})
-	} else {
-		res.writeHead(404);
-		res.end("404 Error. This kinda sucks, but you have an invalid URL :(\nThe URL in use here is /POSTplayerValues but don't try doing stuff to it as you probably will break something.");
-	}
+				playerinfo.players.push(playervar);
+			};
+			res.end(JSON.stringify(playerinfo));
+		} else {
+			return badRequest(res)
+		}
+	})
 }).listen(port);
 
 function badRequest(res) {
@@ -70,12 +67,44 @@ function badRequest(res) {
 	res.end('400 Error; Bad Request. Not JSON or some other error? I TOLD YOU not to try to do stuff like this.')
 } 
 
+function notfound(res) {
+	res.writeHead(404);
+	res.end('404 Error. bruh dont try to break shit')
+}
+
 function postrequest(res) {
 	res.writeHead(400);
 	res.end('400 Error; Bad Request. Ya need to use a POST request here, but please dont you might break something.')
 }
 
-async function handleFakePlayers(obj) {
+function getBricks() {
+	let brickData=[]
+	let env=world.environment
+	world.bricks.forEach((brick) => {
+		let brickobj={
+			Color:brick.color,
+			netId: brick.netId,
+			rotation:brick.rotation,
+			position:{x: brick.position.x+(brick.scale.x/2),y:brick.position.z+(brick.scale.z/2)+0.5,z:brick.position.y+(brick.scale.y/2)},
+			scale:{x: brick.scale.x, y: brick.scale.z, z: brick.scale.y},
+			Transparency: ((brick.visibility-0.5)*-1)+0.5,
+			CanCollide: brick.collision
+		}
+		brickData.push(brickobj)
+	})
+	brickData.push({
+		Color:env.baseColor,
+		scale:{x:env.baseSize,y:0.05,z:env.baseSize},
+		netId:"Baseplate",
+		rotation:0,
+		position:{x:0,y:0.4975,z:0},
+		Transparency:0,
+		CanCollide:true
+	})
+	return brickData
+}
+
+function handleFakePlayers(obj) {
 	//remove gone players
 	for (let p of Game.fakePlayers) {
 		if (!obj.players.find((player) => player.netId==p.netId)) {
@@ -83,14 +112,13 @@ async function handleFakePlayers(obj) {
 		}
 	}
 
-	await sleep(100)
-
 	//add new players
 	for (let p of obj.players) {
 		let fakeplr=Game.fakePlayers.find((plr) => plr.netId==p.netId)
 		if (!fakeplr) {
 			let newpacket = new PacketBuilder("SendPlayers")
 			.write("uint8", 1)
+			//.write("uint32", p.netId)
 			.write("uint32", p.netId)
 			.write("string", p.username)
 			.write("uint32", 0)
@@ -154,18 +182,20 @@ async function handleFakePlayers(obj) {
 					position.z+=3.5;
 					let playerEdit=getPlayerEdit(this);
 					playerEdit.edits.position={x:position.x,y:position.z,z:position.y};
+					position.z-=3.5
 				},
 				setSpeech:function(msg=""){
 					this.speech=msg
 					let newpacket = new PacketBuilder("Figure")
 					.write("uint32", this.netId)
 					.write("string", "f")
-					.write("string", hex.formatHex(msg))
+					.write("string", hex.default(msg))
 					newpacket.broadcast()
 				},
 				setScore:function(score){
 					let playerEdit=getPlayerEdit(this);
 					playerEdit.edits.score=score
+					this.score=score
 					let newpacket = new PacketBuilder("Figure")
 					.write("uint32", this.netId)
 					.write("string", "X")
@@ -183,13 +213,10 @@ async function handleFakePlayers(obj) {
 				let fake=Game.fakePlayers.find((plr) => plr.netId==p.netId).alive=true
 				if (p.position)
 					setFakePlayerPosition(p.netId, p.position)
-				await sleep(100)
 				if (p.rotation)
 					setFakePlayerRotation(p.netId, p.rotation)
-				await sleep(100)
 				if (p.colors)
 					setFakePlayerColors(p.netId, p.colors)
-				await sleep(100)
 				setFakePlayerHealth(p.netId, false)
 			} else {
 				Game.fakePlayers.find((plr) => plr.netId==p.netId).alive=false
@@ -266,7 +293,7 @@ function setFakePlayerRotation(netid, rot) {
 	let rotpacket = new PacketBuilder("Figure")
 		.write("uint32", netid)
 		.write("string", "F")
-		.write("uint32", rot)
+		.write("float", rot)
 	rotpacket.broadcast()
 }
 
