@@ -1,7 +1,4 @@
-The roblox game allows connecting to the node-hill server and vice versa
-
 still work in progress
-
 How to get it running: 
 # step 1: node-hill
 
