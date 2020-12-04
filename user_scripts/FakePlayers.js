@@ -360,33 +360,3 @@ Game.on("playerLeave", (p) => {
 	Game.allPlayers.splice(Game.allPlayers.indexOf(p),1)
 	Game.messageFakePlayers(`\\c6[SERVER]: \\c0${p.username} has left the server!`)
 })
-
-/*
-  	if (req.url=="/GETplayerValues") {
-		if (req.method!=='GET') return getrequest(res)
-		res.writeHead(200, {'Content-Type': 'application/json'});
-		var playerinfo={
-			players: [],
-			chat: chatMessages
-		};
-		chatMessages=[];
-		for (let players of Game.players) {
-			let playervar={
-				username: players.username,
-				netId: players.netId,
-				position: {x: players.position.x, y: players.position.z, z: players.position.y},
-				rotation:players.rotation.z,
-				colors: {
-					head:players.colors.head,
-					torso: players.colors.torso,
-					leftLeg: players.colors.leftLeg,
-					rightLeg: players.colors.rightLeg,
-					leftArm: players.colors.leftArm,
-					rightArm: players.colors.rightArm
-				},
-				health:{maxHealth: players.maxHealth, Health: players.health}
-			};
-			playerinfo.players.push(playervar);
-		};
-		res.end(JSON.stringify(playerinfo));
-*/
