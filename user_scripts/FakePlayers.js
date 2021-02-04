@@ -4,7 +4,7 @@ const port=42481; //change this to the second port you have forwarded.
 const http=getModule("http");
 const color=require("./../node_modules/node-hill/dist/util/color/colorModule.js").default;
 const hex=require("./../node_modules/node-hill/dist/util/color/formatHex.js");
-
+//const pickSpawn=require("./../node_modules/node-hill/dist/scripts/world/pickSpawn.js")
 var chatMessages=[];
 var ghostPlayerEdits=[];
 
@@ -32,7 +32,8 @@ http.createServer(function (req, res) {
 			players: [],
 				chat: chatMessages,
 				ghostPlayerEdits: ghostPlayerEdits,
-				bricks: getBricks()
+				bricks: getBricks(),
+				teams:getTeams()
 			};
 			chatMessages=[];
 			ghostPlayerEdits=[];
@@ -51,6 +52,7 @@ http.createServer(function (req, res) {
 						leftArm: players.colors.leftArm,
 						rightArm: players.colors.rightArm
 					},
+					team:players.team.netId,
 					health:{maxHealth: players.maxHealth, Health: players.health}
 				};
 				playerinfo.players.push(playervar);
@@ -135,6 +137,7 @@ function handleFakePlayers(obj) {
 				destroyed:false,
 				health:100,
 				maxHealth:100,
+				team:undefined,
 				membershipType:2,
 				netId:p.netId,
 				userId:p.netId,
@@ -202,21 +205,36 @@ function handleFakePlayers(obj) {
 					.write("uint32", score)
 					newpacket.broadcast()
 				},
+				setTeam:function(team){
+					let playerEdit=getPlayerEdit(this)
+					playerEdit.edits.team=team.netId
+					this.team=team
+					let newpacket = new PacketBuilder("Figure")
+					.write("uint32", this.netId)
+					.write("string", "Y")
+					.write("uint32", team.netId)
+					newpacket.broadcast()
+				},
 				prompt:this.message,
 				userId:0,
 				username:p.username
 			}
+			fakeplayer.setTeam(Game.world.teams[Math.floor(Math.random() * Game.world.teams.length)]);
 			Game.fakePlayers.push(fakeplayer)
 			Game.allPlayers.push(fakeplayer)
 		} else {
 			if (!(p.alive===false)) {
-				let fake=Game.fakePlayers.find((plr) => plr.netId==p.netId).alive=true
+				let fake=Game.fakePlayers.find((plr) => plr.netId==p.netId)
 				if (p.position)
 					setFakePlayerPosition(p.netId, p.position)
 				if (p.rotation)
 					setFakePlayerRotation(p.netId, p.rotation)
 				if (p.colors)
 					setFakePlayerColors(p.netId, p.colors)
+				if (Game.fakePlayers.find((plr) => plr.netId==p.netId).alive==false) {
+					teleFakePlayer(fake)
+					fake.alive=true
+				}
 				setFakePlayerHealth(p.netId, false)
 			} else {
 				Game.fakePlayers.find((plr) => plr.netId==p.netId).alive=false
@@ -236,6 +254,14 @@ function handleFakePlayers(obj) {
 			}, 6000)
 		}
 	})
+}
+
+function getTeams() {
+	let teams=[]
+	for (let t of Game.world.teams) {
+		teams.push({name:t.name, color:t.color, netId:t.netId, playerNames: {}})
+	}
+	return teams
 }
 
 function getPlayerEdit(p) {
@@ -269,7 +295,9 @@ function sendFakePlayers(p) {
 
 function setFakePlayerPosition(netid, pos) {
 	let fakeplayer = Game.fakePlayers.find((fake) => fake.netId==netid)
-	fakeplayer.position.x=pos.x;fakeplayer.position.y=pos.y;fakeplayer.z=pos.z;
+	fakeplayer.position.x=pos.x;
+	fakeplayer.position.y=pos.y;
+	fakeplayer.position.z=pos.z;
 	let pospacket = new PacketBuilder("Figure")
 		.write("uint32", netid)
 		.write("string", "ABC")
@@ -284,6 +312,11 @@ function setFakePlayerHealth(netid, dead) {
 		.write("float", netid)
 		.write("bool", dead)
 	hppacket.broadcast()
+}
+
+function teleFakePlayer(p) {
+	let spawn=pickSpawn()
+	p.setPosition(spawn)
 }
 
 function setFakePlayerRotation(netid, rot) {
@@ -360,3 +393,13 @@ Game.on("playerLeave", (p) => {
 	Game.allPlayers.splice(Game.allPlayers.indexOf(p),1)
 	Game.messageFakePlayers(`\\c6[SERVER]: \\c0${p.username} has left the server!`)
 })
+
+function pickSpawn() {
+    const SPAWN_LENGTH = Game.world.spawns.length;
+    if (SPAWN_LENGTH > 0) {
+        const SPAWN_BRICK = Game.world.spawns[Math.floor(Math.random() * SPAWN_LENGTH)];
+        return new Vector3(SPAWN_BRICK.position.x + SPAWN_BRICK.scale.x / 2, SPAWN_BRICK.position.y + SPAWN_BRICK.scale.y / 2, SPAWN_BRICK.position.z + SPAWN_BRICK.scale.z / 2);
+    }
+    const BASE_SIZE = Game.world.environment.baseSize;
+    return new Vector3(generateRandomInteger(-BASE_SIZE / 2, BASE_SIZE / 2), generateRandomInteger(-BASE_SIZE / 2, BASE_SIZE / 2), BASE_SIZE / 2);
+}
