@@ -481,11 +481,13 @@ Game.on("playerJoin", (p) => {
 		}
 		newpacket.send(p.socket)
 		for (let fake of Game.fakePlayers) {
-			let teampacket=new PacketBuilder("Figure")
-				.write("uint32", fake.netId)
-				.write("string", "Y")
-				.write("uint32", fake.team.netId)
-			teampacket.send(p.socket)
+			if (fake.team) {
+				let teampacket=new PacketBuilder("Figure")
+					.write("uint32", fake.netId)
+					.write("string", "Y")
+					.write("uint32", fake.team.netId)
+				teampacket.send(p.socket)
+			}
 		}
 	})
 })
