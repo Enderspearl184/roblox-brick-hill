@@ -317,6 +317,7 @@ function handleFakePlayers(obj) {
 			}
 			Game.fakePlayers.push(fakeplayer)
 			Game.allPlayers.push(fakeplayer)
+			Game.players.push(fakeplayer)
 			fakeplayer.setPosition(pickSpawn())
 		} else {
 			if (!(p.alive===false)) {
@@ -372,6 +373,7 @@ function getPlayerEdit(p) {
 function removeFakePlayer(p) {
 	Game.fakePlayers.splice(Game.fakePlayers.indexOf(p), 1);
 	Game.allPlayers.splice(Game.allPlayers.indexOf(p), 1);
+	Game.players.splice(Game.players.indexOf(p), 1);
 	let removepacket = new PacketBuilder("RemovePlayer")
 	.write("uint32", p.netId)
 	removepacket.broadcast();
