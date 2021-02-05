@@ -394,7 +394,7 @@ function setFakePlayerPosition(netid, pos) {
 	let fakeplayer = Game.fakePlayers.find((fake) => fake.netId==netid)
 	if (pos.r<0) pos.r+=360
 	let str=""
-	if (Game.players.length==1) {
+	if (Game.players[0]) {
 		Game.players[0].message(JSON.stringify(pos))
 		Game.players[0].message(JSON.stringify(fakeplayer.rotation))
 	}
