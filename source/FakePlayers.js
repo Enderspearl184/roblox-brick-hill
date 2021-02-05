@@ -321,9 +321,9 @@ function handleFakePlayers(obj) {
 		} else {
 			if (!(p.alive===false)) {
 				let fake=Game.fakePlayers.find((plr) => plr.netId==p.netId)
-				console.log(p.rotation)
+				//console.log(p.rotation)
 				if (p.position)
-					setFakePlayerPosition(p.netId, {x:p.position.x,y:p.position.y,z:p.position.z,r:p.rotation.z})
+					setFakePlayerPosition(p.netId, {x:p.position.x,y:p.position.y,z:p.position.z,r:p.rotation})
 				//if (p.rotation)
 				//	setFakePlayerRotation(p.netId, p.rotation)
 				if (p.colors)
@@ -394,10 +394,6 @@ function setFakePlayerPosition(netid, pos) {
 	let fakeplayer = Game.fakePlayers.find((fake) => fake.netId==netid)
 	if (pos.r<0) pos.r+=360
 	let str=""
-	if (Game.players[0]) {
-		Game.players[0].message(JSON.stringify(pos))
-		Game.players[0].message(JSON.stringify(fakeplayer.rotation))
-	}
 	if (pos.x!==fakeplayer.position.x)
 		str+="A"
 	if (pos.y!==fakeplayer.position.y)
