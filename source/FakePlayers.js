@@ -145,7 +145,7 @@ function handleFakePlayers(obj) {
 				netId:p.netId,
 				userId:p.netId,
 				position: new Vector3(0,0,0),
-				rotation: new Vector3(0,0,p.rotation),
+				rotation: new Vector3(0,0,0),
 				scale: new Vector3(1,1,1),
 				score:0,
 				speech:"",
@@ -322,9 +322,9 @@ function handleFakePlayers(obj) {
 			if (!(p.alive===false)) {
 				let fake=Game.fakePlayers.find((plr) => plr.netId==p.netId)
 				if (p.position)
-					setFakePlayerPosition(p.netId, p.position)
-				if (p.rotation)
-					setFakePlayerRotation(p.netId, p.rotation)
+					setFakePlayerPosition(p.netId, {x:p.position.x,y:p.position.y,z:p.position.z,r:p.rotation})
+				//if (p.rotation)
+				//	setFakePlayerRotation(p.netId, p.rotation)
 				if (p.colors)
 					setFakePlayerColors(p.netId, p.colors)
 				if (Game.fakePlayers.find((plr) => plr.netId==p.netId).alive==false) {
@@ -340,7 +340,7 @@ function handleFakePlayers(obj) {
 	}
 	//handle chat
 	obj.chat.forEach((msg) => {
-		Game.messageRealPlayers(`[#ffde0a][ROBLOX] ${msg.username}\\c1:\\c0 ` + msg.message);
+		Game.messageRealPlayers("[#ffde0a][ROBLOX] " + msg.username + "\\c1:\\c0 " + msg.message);
 		let fake = Game.fakePlayers.find((fake) => fake.username==msg.username)
 		if (fake) {
 			clearTimeout(fake.bubbleTimer);
@@ -391,16 +391,49 @@ function sendFakePlayers(p) {
 
 function setFakePlayerPosition(netid, pos) {
 	let fakeplayer = Game.fakePlayers.find((fake) => fake.netId==netid)
+	if (pos.r<0) pos.r+=360
+	let str=""
+	if (pos.x!==fakeplayer.position.x)
+		str+="A"
+	if (pos.y!==fakeplayer.position.y)
+		str+="B"
+	if (pos.z!==fakeplayer.position.z)
+		str+="C"
+	if (pos.r!==fakeplayer.rotation.z)
+		str+="F"
+	if (str=="") return
+	let pospacket = new PacketBuilder("Figure")
+		.write("uint32", netid)
+		.write("string", str)
+		for (let i=0; i< str.length; i++) {
+			let char=str.charAt(i)
+			switch (char) {
+				case "A": {
+					pospacket.write("float", pos.x);
+					break;
+				}	
+				case "B": {
+					pospacket.write("float", pos.y);
+					break;
+				}
+				case "C": {
+					pospacket.write("float", pos.z);
+					break;
+				}
+				case "F": {
+					pospacket.write("float", pos.r);
+					break;
+				}
+			}
+		}
+		//.write("float", pos.x)
+		//.write("float", pos.y)
+		//.write("float", pos.z)
+	pospacket.broadcast()
 	fakeplayer.position.x=pos.x;
 	fakeplayer.position.y=pos.y;
 	fakeplayer.position.z=pos.z;
-	let pospacket = new PacketBuilder("Figure")
-		.write("uint32", netid)
-		.write("string", "ABC")
-		.write("float", pos.x)
-		.write("float", pos.y)
-		.write("float", pos.z)
-	pospacket.broadcast()
+	fakeplayer.rotation.z=pos.r;
 }
 
 function setFakePlayerHealth(netid, dead) {
