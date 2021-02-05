@@ -145,7 +145,7 @@ function handleFakePlayers(obj) {
 				netId:p.netId,
 				userId:p.netId,
 				position: new Vector3(0,0,0),
-				rotation: new Vector3(0,0,p.rotation),
+				rotation: new Vector3(0,0,0),
 				scale: new Vector3(1,1,1),
 				score:0,
 				speech:"",
@@ -323,7 +323,7 @@ function handleFakePlayers(obj) {
 				let fake=Game.fakePlayers.find((plr) => plr.netId==p.netId)
 				console.log(p.rotation)
 				console.log("..")
-				console.log("fake.rotation")
+				console.log(fake.rotation)
 				console.log(".")
 				if (p.position)
 					setFakePlayerPosition(p.netId, {x:p.position.x,y:p.position.y,z:p.position.z,r:p.rotation})
