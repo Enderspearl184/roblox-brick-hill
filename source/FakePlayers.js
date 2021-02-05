@@ -399,7 +399,7 @@ function setFakePlayerPosition(netid, pos) {
 		str+="B"
 	if (pos.z!==fakeplayer.position.z)
 		str+="C"
-	if (pos.r!==fakeplayer.rotation.r)
+	if (pos.r!==fakeplayer.rotation.z)
 		str+="F"
 	if (str=="") return
 	let pospacket = new PacketBuilder("Figure")
