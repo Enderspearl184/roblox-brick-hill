@@ -21,7 +21,7 @@ Just like your math homework this isnt the end of step one
 
 I'm assuming you know how to port forward so no instructions for that here
 
-Forward *another* port different than the one you are hosting on
+Forward *another* port different than the one you are hosting node-hill on
 
 open FakePlayers.js and change the port on the top line to the port you just forwarded and remember to ***save***
 
@@ -30,9 +30,9 @@ the game is uncopylocked the link is https://www.roblox.com/games/5886668460/
 
 open it, and edit RobloxScript in ServerScriptService
 
-change \_G.port to the port the http server is being hosted on.
+change \_G.port to the port you have in fakeplayers.js
 
-change \_G.url to the url/ip of the http server
+change \_G.url to the url/ip of the http server (like http://example.com or http://127.0.0.1)
 
 \_G.differentServer probably doesn't need to be changed but its there
 
