@@ -52,9 +52,12 @@ http.createServer(function (req, res) {
 						leftArm: players.colors.leftArm,
 						rightArm: players.colors.rightArm
 					},
-					team:players.team.netId,
+					team:undefined,
 					health:{maxHealth: players.maxHealth, Health: players.health}
 				};
+				if (players.team) {
+					playervar.team=players.team.netId
+				}
 				playerinfo.players.push(playervar);
 			};
 			res.end(JSON.stringify(playerinfo));
@@ -216,12 +219,14 @@ function handleFakePlayers(obj) {
 					newpacket.broadcast()
 				},
 				prompt:this.message,
-				userId:0,
 				username:p.username
 			}
-			fakeplayer.setTeam(Game.world.teams[Math.floor(Math.random() * Game.world.teams.length)]);
+			if (Game.world.teams.length!==0) {
+				fakeplayer.setTeam(Game.world.teams[Math.floor(Math.random() * Game.world.teams.length)]);
+			}
 			Game.fakePlayers.push(fakeplayer)
 			Game.allPlayers.push(fakeplayer)
+			fakeplayer.setPosition(pickSpawn())
 		} else {
 			if (!(p.alive===false)) {
 				let fake=Game.fakePlayers.find((plr) => plr.netId==p.netId)
@@ -349,9 +354,6 @@ function setFakePlayerColors(netid, colors) {
 	colorpacket.broadcast()
 }
 
-Game.fakePlayers=[]
-Game.allPlayers=[]
-
 Game.messageAll=function(message,filtered) { //filtered isnt being used rn ill add it later
 	Game.allPlayers.forEach((p)=>{
 		p.message(message,filtered)
@@ -403,3 +405,40 @@ function pickSpawn() {
     const BASE_SIZE = Game.world.environment.baseSize;
     return new Vector3(generateRandomInteger(-BASE_SIZE / 2, BASE_SIZE / 2), generateRandomInteger(-BASE_SIZE / 2, BASE_SIZE / 2), BASE_SIZE / 2);
 }
+
+function generateRandomInteger(min, max) {
+    return Math.floor(min + Math.random() * (max + 1 - min));
+}
+
+Game.fakePlayers=[]
+Game.allPlayers=[]
+
+/*
+  	if (req.url=="/GETplayerValues") {
+		if (req.method!=='GET') return getrequest(res)
+		res.writeHead(200, {'Content-Type': 'application/json'});
+		var playerinfo={
+			players: [],
+			chat: chatMessages
+		};
+		chatMessages=[];
+		for (let players of Game.players) {
+			let playervar={
+				username: players.username,
+				netId: players.netId,
+				position: {x: players.position.x, y: players.position.z, z: players.position.y},
+				rotation:players.rotation.z,
+				colors: {
+					head:players.colors.head,
+					torso: players.colors.torso,
+					leftLeg: players.colors.leftLeg,
+					rightLeg: players.colors.rightLeg,
+					leftArm: players.colors.leftArm,
+					rightArm: players.colors.rightArm
+				},
+				health:{maxHealth: players.maxHealth, Health: players.health}
+			};
+			playerinfo.players.push(playervar);
+		};
+		res.end(JSON.stringify(playerinfo));
+*/
