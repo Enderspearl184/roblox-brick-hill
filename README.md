@@ -34,6 +34,6 @@ change \_G.port to the port you have in fakeplayers.js
 
 change \_G.url to the url/ip of the http server (like http://example.com or http://127.0.0.1)
 
-\_G.differentServer probably doesn't need to be changed but its there
+\_G.differentServer is for if you are running studio on a different device than what you are hosting on
 
 # thats basically it I probably missed stuff though lol
