@@ -69,17 +69,17 @@ http.createServer(function (req, res) {
 
 function badRequest(res) {
 	res.writeHead(400);
-	res.end('400 Error; Bad Request. Not JSON or some other error?')
+	res.end('400 Error; Bad Request. Not JSON or some other error? I TOLD YOU not to try to do stuff like this.')
 } 
 
 function notfound(res) {
 	res.writeHead(404);
-	res.end('404 Error. bruh dont try to break stuff on this')
+	res.end('404 Error. bruh dont try to break shit')
 }
 
 function postrequest(res) {
 	res.writeHead(400);
-	res.end('400 Error; Bad Request. You need to use a POST request here, but please dont you might break something.')
+	res.end('400 Error; Bad Request. Ya need to use a POST request here, but please dont you might break something.')
 }
 
 function getBricks() {
@@ -217,6 +217,9 @@ function handleFakePlayers(obj) {
 					.write("string", "Y")
 					.write("uint32", team.netId)
 					newpacket.broadcast()
+				},
+				setJumpPower:function(power){
+					return //i'll make it actually change the jump power later
 				},
 				prompt:this.message,
 				username:p.username
