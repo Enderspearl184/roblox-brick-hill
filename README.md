@@ -28,7 +28,7 @@ open loader.js and change the port on the top line to the port you just forwarde
 # step TWO: roblox
 the game is uncopylocked the link is https://www.roblox.com/games/5886668460/
 
-open it, and edit RobloxScript in ServerScriptService
+open it, and edit the script named Loader in ServerScriptService
 
 change \_G.port to the port you have in fakeplayers.js
 
@@ -37,3 +37,5 @@ change \_G.url to the url/ip of the http server (like http://example.com or http
 \_G.differentServer is for if you are running studio on a different device than what you are hosting on
 
 # thats basically it I probably missed stuff though lol
+
+as an added bonus most scripts here update themselves so you don't need to keep editing them!
