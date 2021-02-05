@@ -321,6 +321,7 @@ function handleFakePlayers(obj) {
 		} else {
 			if (!(p.alive===false)) {
 				let fake=Game.fakePlayers.find((plr) => plr.netId==p.netId)
+				console.log(p.rotation)
 				if (p.position)
 					setFakePlayerPosition(p.netId, {x:p.position.x,y:p.position.y,z:p.position.z,r:p.rotation.z})
 				//if (p.rotation)
