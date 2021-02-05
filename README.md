@@ -32,7 +32,7 @@ open it, and edit RobloxScript in ServerScriptService
 
 change \_G.port to the port you have in fakeplayers.js
 
-change \_G.url to the url/ip of the http server (like http://example.com or http://127.0.0.1)
+change \_G.url to the url/ip of the http server (like http://example.com or http://127.0.0.1) but don't put a / at the end of it
 
 \_G.differentServer is for if you are running studio on a different device than what you are hosting on
 
