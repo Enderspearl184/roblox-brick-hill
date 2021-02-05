@@ -1,4 +1,4 @@
-const port=42481; //change this to the second port you have forwarded.
+const port=Game.rbxport; //change this to the second port you have forwarded.
 
 
 const http=getModule("http");
