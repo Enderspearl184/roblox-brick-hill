@@ -23,7 +23,7 @@ I'm assuming you know how to port forward so no instructions for that here
 
 Forward *another* port different than the one you are hosting node-hill on
 
-open FakePlayers.js and change the port on the top line to the port you just forwarded and remember to ***save***
+open loader.js and change the port on the top line to the port you just forwarded and remember to ***save***
 
 # step TWO: roblox
 the game is uncopylocked the link is https://www.roblox.com/games/5886668460/
