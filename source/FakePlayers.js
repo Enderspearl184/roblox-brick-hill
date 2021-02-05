@@ -218,8 +218,96 @@ function handleFakePlayers(obj) {
 					.write("uint32", team.netId)
 					newpacket.broadcast()
 				},
-				setJumpPower:function(power){
-					return //i'll make it actually change the jump power later
+				destroyTool:function(arr) {
+					console.log("player deleteBricks is unimplemented and probably won't be added")
+				},
+				destroyTool:function(tool) {
+					console.log("player destroyTool is unimplemented")
+				},
+				equipTool:function(tool) {
+					console.log("player equipTool is unimplemented")
+				},
+				getBlockedPlayers:function() {
+					console.log("getBlockedPlayers is unimplemented and probably won't be added")
+					return []
+				},
+				getRankInGroup:function(id) {
+					console.log("player getUserInfo is unimplemented and won't be added")
+				},
+				getUserInfo:function() {
+					console.log("player getUserInfo is unimplemented and won't be added")
+				},
+				keypress:function(func) {
+					console.log("player keypress is unimplemented and might not be added")
+				},
+				loadBricks:function(brick) {
+					console.log("player loadBricks is unimplemented and probably won't be added")
+				},
+				messageAll:function(msg) {
+					Game.messageAll(msg)
+				},
+				mouseClick:function(func) {
+					console.log("player mouseClick is unimplemented and might not be added")
+				},
+				newBrick:function(brick) {
+					console.log("player newBrick is unimplemented and probably won't be added")
+				},
+				ownsAsset:function(bhid, rbxid) {
+					console.log("ownsAsset is unimplemented and may be added with the second argument being the roblox item id")
+				},
+				setAvatar:function(userId) {
+					console.log("setAvatar is unimplemented and might not be added")
+				},
+				setCameraDistance:function(distance) {
+					console.log("setCameraDistance is unimplemented and probably won't be added")
+				},
+				setCameraFOV:function(fov) {
+					console.log("setCameraFOV is unimplemented and probably won't be added")
+				},
+				setCameraObject:function(obj) {
+					console.log("setCameraObject is unimplemented and probably won't be added")
+				},
+				setCameraPosition:function(position) {
+					console.log("setCameraPosition is unimplemented and probably won't be added")
+				},
+				setCameraRotation:function(rotation) {
+					console.log("setCameraRotation is unimplemented and probably won't be added")
+				},
+				setCameraType:function(cameratype) {
+					console.log("setCameraType is unimplemented and probably won't be added")
+				},
+				setEnvironment:function(environment) {
+					console.log("player setEnvironment is unimplemented and probably won't be added")
+				},
+				setJumpPower:function(power) {
+					console.log("setJumpPower is unimplemented")
+				},
+				setSpeed:function(speed) {
+					console.log("setSpeed is unimplemented")
+				},
+				setScale:function(speed) {
+					console.log("setScale is unimplemented")
+				},
+				setOutfit:function(outfit) {
+					console.log("setOutfit is unimplemented")
+				},
+				setInterval:function(func, delay) {
+					console.log("setInterval is unimplemented")
+				},
+				addTool:function(tool) {
+					console.log("addTool is unimplemented")
+				},				
+				bottomPrint:function(text, seconds) {
+					console.log("bottomPrint is unimplemented")
+				},
+				centerPrint:function(text, seconds) {
+					console.log("centerPrint is unimplemented")
+				},
+				topPrint:function(text, seconds) {
+					console.log("topPrint is unimplemented")
+				},
+				clearMap:function() {
+					console.log("player clearMap is unimplemented, and probably won't be added")
 				},
 				prompt:this.message,
 				username:p.username
@@ -392,6 +480,13 @@ Game.on("playerJoin", (p) => {
 			newpacket.write("uint8", 2)
 		}
 		newpacket.send(p.socket)
+		for (let fake of Game.fakePlayers) {
+			let teampacket=new PacketBuilder("Figure")
+				.write("uint32", fake.netId)
+				.write("string", "Y")
+				.write("uint32", fake.team.netId)
+			teampacket.send(p.socket)
+		}
 	})
 })
 Game.on("playerLeave", (p) => {
