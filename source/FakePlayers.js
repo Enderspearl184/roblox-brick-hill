@@ -340,7 +340,7 @@ function handleFakePlayers(obj) {
 	}
 	//handle chat
 	obj.chat.forEach((msg) => {
-		Game.messageRealPlayers(`[#ffde0a][ROBLOX] ${msg.username}\\c1:\\c0 ` + msg.message);
+		Game.messageRealPlayers("[#ffde0a][ROBLOX] " + msg.username + "\\c1:\\c0 " + msg.message);
 		let fake = Game.fakePlayers.find((fake) => fake.username==msg.username)
 		if (fake) {
 			clearTimeout(fake.bubbleTimer);
@@ -408,22 +408,22 @@ function setFakePlayerPosition(netid, pos) {
 		for (let i=0; i< str.length; i++) {
 			let char=str.charAt(i)
 			switch (char) {
-					case "A": {
-						pospacket.write("float", pos.x);
-						break;
-					}
-					case "B": {
-						pospacket.write("float", pos.y);
-						break;
-					}
-					case "C": {
-						pospacket.write("float", pos.z);
-						break;
-					}
-					case "F": {
-						pospacket.write("float", pos.r);
-						break;
-					}
+				case "A": {
+					pospacket.write("float", pos.x);
+					break;
+				}	
+				case "B": {
+					pospacket.write("float", pos.y);
+					break;
+				}
+				case "C": {
+					pospacket.write("float", pos.z);
+					break;
+				}
+				case "F": {
+					pospacket.write("float", pos.r);
+					break;
+				}
 			}
 		}
 		//.write("float", pos.x)
