@@ -30,7 +30,7 @@ the game is uncopylocked the link is https://www.roblox.com/games/5886668460/
 
 open it, and edit the script named Loader in ServerScriptService
 
-change \_G.port to the port you have in fakeplayers.js
+change \_G.port to the port you have in loader.js
 
 change \_G.url to the url/ip of the http server (like http://example.com or http://127.0.0.1) but don't put a / at the end of it
 
