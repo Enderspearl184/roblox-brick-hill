@@ -1,4 +1,5 @@
 //going to see if making a version of the actual player class would make it work better... probably not
+(function() {
 
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -873,3 +874,6 @@ FakePlayer.chatted = PlayerEvents.Chatted;
  */
 FakePlayer.moved = PlayerEvents.Moved;
 FakePlayer.playerId = 0;
+	
+return exports
+})()
