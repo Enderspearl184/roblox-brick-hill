@@ -50,10 +50,10 @@ var PlayerEvents;
 class FakePlayer extends events_1.EventEmitter {
     constructor(data) {
 	this.socket={
-			write: function(data) {
-				console.log(data)
-			}
-		    }
+		write: function(data) {
+			console.log(data)
+		}
+	}
 	    
         super();
         /** True if the player has left the game. */
