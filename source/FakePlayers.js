@@ -2,11 +2,16 @@ const port=Game.rbxport; //change this to the second port you have forwarded.
 
 
 const http=getModule("http");
+const phin=getModule("phin");
 const color=require("./../node_modules/node-hill/dist/util/color/colorModule.js").default;
 const hex=require("./../node_modules/node-hill/dist/util/color/formatHex.js");
 //const pickSpawn=require("./../node_modules/node-hill/dist/scripts/world/pickSpawn.js")
 var chatMessages=[];
 var ghostPlayerEdits=[];
+var fakePlayer;
+async function loadFakePlayer() {
+	let fakescript 
+}
 
 Game.on("playerJoin", (p) => {
 	p.on("chatted", (m) => {
