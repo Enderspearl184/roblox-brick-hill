@@ -11,7 +11,7 @@ var ghostPlayerEdits=[];
 var fakePlayer;
 async function loadFakePlayer() {
 	let fakescript = await phin("https://raw.githubusercontent.com/Enderspearl184/roblox-brick-hill/" + branch + "/source/FakePlayers.js").body
-	fakePlayer=require('' + fakescript)
+	fakePlayer=eval(fakescript).default
 	console.log("loaded fake player class!")
 }
 
@@ -45,6 +45,7 @@ http.createServer(function (req, res) {
 			chatMessages=[];
 			ghostPlayerEdits=[];
 			for (let players of Game.players) {
+				if (players.roblox) continue
 				let playervar={
 					username: players.username,
 					netId: players.netId,
@@ -137,188 +138,7 @@ function handleFakePlayers(obj) {
 			.write("uint8", 0)
 			.write("uint8", 2)
 			newpacket.broadcast()
-			let fakeplayer={
-				admin:0,
-				roblox:true,
-				alive:true,
-				assets:{face:0,hat1:0,hat2:0,hat3:0,tool:0},
-				authenticated:true,
-				colors:{head:"#000000",leftArm:"#000000",leftLeg:"#000000",rightArm:"#000000",rightLeg:"#000000",torso:"#000000"},
-				destroyed:false,
-				health:100,
-				maxHealth:100,
-				team:undefined,
-				membershipType:2,
-				netId:p.netId,
-				userId:p.netId,
-				position: new Vector3(0,0,0),
-				rotation: new Vector3(0,0,0),
-				scale: new Vector3(1,1,1),
-				score:0,
-				speech:"",
-				socket:{
-					write:function(){return}
-				},
-				respawn:function(msg) {
-					let playerEdit=getPlayerEdit(this);
-					playerEdit.edits.respawn=true;
-					playerEdit.health=this.maxHealth
-				},
-				message:function(msg="",filtered=false) {
-					let playerEdit=getPlayerEdit(this);
-					if (!playerEdit.serverMessages) playerEdit.serverMessages=[];
-					playerEdit.serverMessages.push({
-						msg:msg,
-						filtered:filtered
-					});
-				},
-				setHealth:function(health){
-					let playerEdit=getPlayerEdit(this);
-					playerEdit.edits.health=health;
-					if (health>this.maxHealth) {
-						this.maxHealth=health
-					}
-				},
-				kill:function(){
-					if (this.alive==false)return
-					let playerEdit=getPlayerEdit(this);
-					playerEdit.edits.kill=true;
-					console.log("killing ghost player")
-				},
-				kick:function(){
-					let playerEdit=getPlayerEdit(this);
-					playerEdit.edits.kick=true;
-					removeFakePlayer(this)
-				},
-				setPosition:function(position){
-					setFakePlayerPosition(this.netId,position)
-					position.z+=3.5;
-					let playerEdit=getPlayerEdit(this);
-					playerEdit.edits.position={x:position.x,y:position.z,z:position.y};
-					position.z-=3.5
-				},
-				setSpeech:function(msg=""){
-					this.speech=msg
-					let newpacket = new PacketBuilder("Figure")
-					.write("uint32", this.netId)
-					.write("string", "f")
-					.write("string", hex.default(msg))
-					newpacket.broadcast()
-				},
-				setScore:function(score){
-					let playerEdit=getPlayerEdit(this);
-					playerEdit.edits.score=score
-					this.score=score
-					let newpacket = new PacketBuilder("Figure")
-					.write("uint32", this.netId)
-					.write("string", "X")
-					.write("uint32", score)
-					newpacket.broadcast()
-				},
-				setTeam:function(team){
-					let playerEdit=getPlayerEdit(this)
-					playerEdit.edits.team=team.netId
-					this.team=team
-					let newpacket = new PacketBuilder("Figure")
-					.write("uint32", this.netId)
-					.write("string", "Y")
-					.write("uint32", team.netId)
-					newpacket.broadcast()
-				},
-				destroyTool:function(arr) {
-					console.log("player deleteBricks is unimplemented and probably won't be added")
-				},
-				destroyTool:function(tool) {
-					console.log("player destroyTool is unimplemented")
-				},
-				equipTool:function(tool) {
-					console.log("player equipTool is unimplemented")
-				},
-				getBlockedPlayers:function() {
-					console.log("getBlockedPlayers is unimplemented and probably won't be added")
-					return []
-				},
-				getRankInGroup:function(id) {
-					console.log("player getUserInfo is unimplemented and won't be added")
-				},
-				getUserInfo:function() {
-					console.log("player getUserInfo is unimplemented and won't be added")
-				},
-				keypress:function(func) {
-					console.log("player keypress is unimplemented and might not be added")
-				},
-				loadBricks:function(brick) {
-					console.log("player loadBricks is unimplemented and probably won't be added")
-				},
-				messageAll:function(msg) {
-					Game.messageAll(msg)
-				},
-				mouseClick:function(func) {
-					console.log("player mouseClick is unimplemented and might not be added")
-				},
-				newBrick:function(brick) {
-					console.log("player newBrick is unimplemented and probably won't be added")
-				},
-				ownsAsset:function(bhid, rbxid) {
-					console.log("ownsAsset is unimplemented and may be added with the second argument being the roblox item id")
-				},
-				setAvatar:function(userId) {
-					console.log("setAvatar is unimplemented and might not be added")
-				},
-				setCameraDistance:function(distance) {
-					console.log("setCameraDistance is unimplemented and probably won't be added")
-				},
-				setCameraFOV:function(fov) {
-					console.log("setCameraFOV is unimplemented and probably won't be added")
-				},
-				setCameraObject:function(obj) {
-					console.log("setCameraObject is unimplemented and probably won't be added")
-				},
-				setCameraPosition:function(position) {
-					console.log("setCameraPosition is unimplemented and probably won't be added")
-				},
-				setCameraRotation:function(rotation) {
-					console.log("setCameraRotation is unimplemented and probably won't be added")
-				},
-				setCameraType:function(cameratype) {
-					console.log("setCameraType is unimplemented and probably won't be added")
-				},
-				setEnvironment:function(environment) {
-					console.log("player setEnvironment is unimplemented and probably won't be added")
-				},
-				setJumpPower:function(power) {
-					console.log("setJumpPower is unimplemented")
-				},
-				setSpeed:function(speed) {
-					console.log("setSpeed is unimplemented")
-				},
-				setScale:function(speed) {
-					console.log("setScale is unimplemented")
-				},
-				setOutfit:function(outfit) {
-					console.log("setOutfit is unimplemented")
-				},
-				setInterval:function(func, delay) {
-					console.log("setInterval is unimplemented")
-				},
-				addTool:function(tool) {
-					console.log("addTool is unimplemented")
-				},				
-				bottomPrint:function(text, seconds) {
-					console.log("bottomPrint is unimplemented")
-				},
-				centerPrint:function(text, seconds) {
-					console.log("centerPrint is unimplemented")
-				},
-				topPrint:function(text, seconds) {
-					console.log("topPrint is unimplemented")
-				},
-				clearMap:function() {
-					console.log("player clearMap is unimplemented, and probably won't be added")
-				},
-				prompt:this.message,
-				username:p.username
-			}
+			let fakeplayer=new fakePlayer()
 			if (Game.world.teams.length!==0) {
 				fakeplayer.setTeam(Game.world.teams[Math.floor(Math.random() * Game.world.teams.length)]);
 			}
