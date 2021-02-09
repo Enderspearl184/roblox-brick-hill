@@ -794,7 +794,7 @@ class FakePlayer extends events_1.EventEmitter {
         });
     }
 }
-exports.default = Player;
+exports.default = FakePlayer;
 /**
 * Fires once when the player fully loads. (camera settings, map loads, players downloaded, etc).
 * @event
@@ -807,7 +807,7 @@ exports.default = Player;
 * })
 * ```
 */
-Player.initialSpawn = PlayerEvents.InitialSpawn;
+FakePlayer.initialSpawn = PlayerEvents.InitialSpawn;
 /**
 * Fires whenever a player dies (health set to 0).
 * @event
@@ -820,7 +820,7 @@ Player.initialSpawn = PlayerEvents.InitialSpawn;
 * })
 * ```
 */
-Player.died = PlayerEvents.Died;
+FakePlayer.died = PlayerEvents.Died;
 /**
 * Fires whenever a player spawns (respawn() is called.)
 * @event
@@ -833,7 +833,7 @@ Player.died = PlayerEvents.Died;
 * })
 * ```
 */
-Player.respawn = PlayerEvents.Respawn;
+FakePlayer.respawn = PlayerEvents.Respawn;
 /**
 * Fires whenever a player's outfit loads.
 * @event
@@ -846,7 +846,7 @@ Player.respawn = PlayerEvents.Respawn;
 * })
 * ```
 */
-Player.avatarLoaded = PlayerEvents.AvatarLoaded;
+FakePlayer.avatarLoaded = PlayerEvents.AvatarLoaded;
 /**
 * Fires whenever the player chats. Functionality-wise this behaves like `Game.on("chatted")`.
 * @event
@@ -860,7 +860,7 @@ Player.avatarLoaded = PlayerEvents.AvatarLoaded;
 * })
 * ```
 */
-Player.chatted = PlayerEvents.Chatted;
+FakePlayer.chatted = PlayerEvents.Chatted;
 /**
  * Fires whenever this player moves.
  * @event
@@ -871,5 +871,5 @@ Player.chatted = PlayerEvents.Chatted;
  *    console.log(`${player.username} moved to ${newPosition.x}, ${newPosition.y}, ${newPosition.z}`)
  * })
  */
-Player.moved = PlayerEvents.Moved;
-Player.playerId = 0;
+FakePlayer.moved = PlayerEvents.Moved;
+FakePlayer.playerId = 0;
