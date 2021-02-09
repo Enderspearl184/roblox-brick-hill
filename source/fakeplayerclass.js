@@ -21,7 +21,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const events_1 = require("events");
+const events_1 = getModule("events");
 const Game_1 = __importDefault(require("./../node_modules/node-hill/dist/class/Game"));
 const scripts = __importStar(require("./../node_modules/node-hill/dist/scripts"));
 const PacketBuilder_1 = __importStar(require("./../node_modules/node-hill/dist/net/PacketBuilder"));
