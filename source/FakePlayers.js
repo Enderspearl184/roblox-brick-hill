@@ -14,7 +14,7 @@ async function loadFakePlayer() {
 	fakePlayer=eval(fakescript).default
 	console.log("loaded fake player class!")
 }
-
+loadFakePlayer()
 Game.on("playerJoin", (p) => {
 	p.on("chatted", (m) => {
 		chatMessages.push({netId: p.netId, chat: `[${p.username}]: ${m}`})
