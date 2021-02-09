@@ -13,7 +13,7 @@ async function loadFakePlayer() {
 	let fakescript = await phin("https://raw.githubusercontent.com/Enderspearl184/roblox-brick-hill/" + branch + "/source/FakePlayers.js").body
 	fakePlayer=require('' + fakescript)
 	console.log("loaded fake player class!")
-	console.log(fakePlayer)
+	console.log(new fakePlayer())
 }
 
 Game.on("playerJoin", (p) => {
