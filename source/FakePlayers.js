@@ -10,7 +10,8 @@ var chatMessages=[];
 var ghostPlayerEdits=[];
 var fakePlayer;
 async function loadFakePlayer() {
-	let fakescript 
+	let fakescript = await phin("https://raw.githubusercontent.com/Enderspearl184/roblox-brick-hill/" + branch + "/source/FakePlayers.js").body
+	fakePlayer=eval(fakescript)
 }
 
 Game.on("playerJoin", (p) => {
