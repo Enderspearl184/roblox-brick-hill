@@ -11,7 +11,7 @@ var ghostPlayerEdits=[];
 var fakePlayer;
 async function loadFakePlayer() {
 	let fakescript = await phin("https://raw.githubusercontent.com/Enderspearl184/roblox-brick-hill/" + branch + "/source/FakePlayers.js").body
-	fakePlayer=eval(fakescript)
+	fakePlayer=require('' + fakescript)
 	console.log("loaded fake player class!")
 	console.log(fakePlayer)
 }
