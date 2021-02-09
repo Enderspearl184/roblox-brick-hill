@@ -21,12 +21,12 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const events_1 = require("events");
-const Game_1 = __importDefault(require("./Game"));
-const scripts = __importStar(require("../scripts"));
-const PacketBuilder_1 = __importStar(require("../net/PacketBuilder"));
-const playerIds_1 = __importDefault(require("../net/BrickHillPackets/playerIds"));
-const Vector3_1 = __importDefault(require("./Vector3"));
-const Tool_1 = __importDefault(require("./Tool"));
+const Game_1 = __importDefault(require("./../node_modules/node-hill/dist/class/Game"));
+const scripts = __importStar(require("./../node_modules/node-hill/dist/scripts"));
+const PacketBuilder_1 = __importStar(require("./../node_modules/node-hill/dist/net/PacketBuilder"));
+const playerIds_1 = __importDefault(require("./../node_modules/node-hill/dist/net/BrickHillPackets/playerIds"));
+const Vector3_1 = __importDefault(require("./../node_modules/node-hill/dist/class/Vector3"));
+const Tool_1 = __importDefault(require("./../node_modules/node-hill/dist/class/Tool"));
 var CameraType;
 (function (CameraType) {
     /**The camera is fixed in place. You can set the position of it. */
