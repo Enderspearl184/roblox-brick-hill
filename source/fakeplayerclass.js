@@ -512,9 +512,6 @@ class FakePlayer extends getModule('events').EventEmitter {
     }
     /**@hidden */
     _updatePositionForOthers(pos) {
-        return 
-        /*
-        __awaiter(this, void 0, void 0, function* () {
             let idBuffer = "";
             if (pos[0] && this.position.x != pos[0]) {
                 idBuffer += "A";
@@ -537,8 +534,6 @@ class FakePlayer extends getModule('events').EventEmitter {
                 return playerIds_1.default(this, idBuffer)
                     .broadcastExcept([this]);
             }
-        });
-        */
     }
     /**Clones a brick locally to the player's client, returns the newly created local brick. */
     newBrick(brick) {
