@@ -13,11 +13,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 //const events = getModule("events");
 const Game_1 = Game
 const scripts = {
-    "setAvatar": require("./../node_modules/dist/scripts/player/setAvatar"),
-    "getUserInfo": require("./../node_modules/dist/scripts/player/getUserInfo"),
-    "getRankInGroup": require("./../node_modules/dist/scripts/player/getRankInGroup"),
-    "playerOwnsAsset": require("./../node_modules/dist/scripts/player/ownsAsset"),
-    "pickSpawn": require("./../node_modules/dist/scripts/world/pickSpawn"),
+    "setAvatar": require("./../node_modules/node-hill/dist/scripts/player/setAvatar"),
+    "getUserInfo": require("./../node_modules/node-hill/dist/scripts/player/getUserInfo"),
+    "getRankInGroup": require("./../node_modules/node-hill/dist/scripts/player/getRankInGroup"),
+    "playerOwnsAsset": require("./../node_modules/node-hill/dist/scripts/player/ownsAsset"),
+    "pickSpawn": require("./../node_modules/node-hill/dist/scripts/world/pickSpawn"),
 }
 const PacketBuilder_1 = PacketBuilder
 const playerIds_1 = require("./../node_modules/node-hill/dist/net/BrickHillPackets/playerIds.js").default
