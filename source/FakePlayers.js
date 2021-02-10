@@ -1,6 +1,5 @@
 const port=Game.rbxport; //change this to the second port you have forwarded.
 
-
 const http=getModule("http");
 const phin=getModule("phin");
 const color=require("./../node_modules/node-hill/dist/util/color/colorModule.js").default;
@@ -10,13 +9,17 @@ var chatMessages=[];
 var ghostPlayerEdits=[];
 var fakePlayer;
 async function loadFakePlayer() {
+	try {
 	console.log("loading fake player class...")
 	let data=await phin({url: `https://raw.githubusercontent.com/Enderspearl184/roblox-brick-hill/${Game.branch}/source/fakeplayerclass.js`})
 	let fakescript=data.body.toString()
 	let evalr = eval(fakescript)
-	console.log(evalr)
-	fakePlayer=evalr.default
+	fakePlayer=evalr
 	console.log("loaded fake player class!")
+	} catch (error) {
+		console.error(error)
+		console.error(JSON.stringify(error))
+	}
 }
 loadFakePlayer()
 Game.on("playerJoin", (p) => {
@@ -376,33 +379,3 @@ function generateRandomInteger(min, max) {
 
 Game.fakePlayers=[]
 Game.allPlayers=[]
-
-/*
-  	if (req.url=="/GETplayerValues") {
-		if (req.method!=='GET') return getrequest(res)
-		res.writeHead(200, {'Content-Type': 'application/json'});
-		var playerinfo={
-			players: [],
-			chat: chatMessages
-		};
-		chatMessages=[];
-		for (let players of Game.players) {
-			let playervar={
-				username: players.username,
-				netId: players.netId,
-				position: {x: players.position.x, y: players.position.z, z: players.position.y},
-				rotation:players.rotation.z,
-				colors: {
-					head:players.colors.head,
-					torso: players.colors.torso,
-					leftLeg: players.colors.leftLeg,
-					rightLeg: players.colors.rightLeg,
-					leftArm: players.colors.leftArm,
-					rightArm: players.colors.rightArm
-				},
-				health:{maxHealth: players.maxHealth, Health: players.health}
-			};
-			playerinfo.players.push(playervar);
-		};
-		res.end(JSON.stringify(playerinfo));
-*/
