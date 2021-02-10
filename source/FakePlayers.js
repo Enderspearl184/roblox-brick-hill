@@ -10,9 +10,8 @@ var chatMessages=[];
 var ghostPlayerEdits=[];
 var fakePlayer;
 async function loadFakePlayer() {
-	let data = await phin({url: "https://github.com/Enderspearl184/raw/roblox-brick-hill/" + Game.branch + "/source/fakeplayerclass.js"})
-	console.log(data.body)
-	let fakescript = data.body.toString()
+	console.log("loading fake player class...")
+	let fakescript=await phin({url: "https://github.com/Enderspearl184/raw/roblox-brick-hill/" + Game.branch + "/source/fakeplayerclass.js"}).body.toString()
 	fakePlayer=eval(fakescript).default
 	console.log("loaded fake player class!")
 }
