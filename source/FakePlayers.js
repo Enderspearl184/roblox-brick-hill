@@ -12,9 +12,7 @@ var fakePlayer;
 async function loadFakePlayer() {
 	console.log("loading fake player class...")
 	let data=await phin({url: `https://raw.githubusercontent.com/Enderspearl184/roblox-brick-hill/${Game.branch}/source/fakeplayerclass.js`})
-	console.log(data)
 	let fakescript=data.body.toString()
-	console.log(fakescript)
 	fakePlayer=eval(fakescript).default
 	console.log("loaded fake player class!")
 }
