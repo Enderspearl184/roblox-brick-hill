@@ -203,13 +203,11 @@ class FakePlayer extends getModule('events').EventEmitter {
         }
     }
     _removePlayer() {
-    /*
         return __awaiter(this, void 0, void 0, function* () {
             return new PacketBuilder_1.default(PacketBuilder_1.PacketEnums.RemovePlayer)
                 .write("uint32", this.netId)
                 .broadcastExcept([this]);
         });
-    */
     }
     topPrint(message, seconds) {
         let playeredit=Game.getPlayerEdit(this)
@@ -698,9 +696,7 @@ class FakePlayer extends getModule('events').EventEmitter {
      * })
      */
     setEnvironment(environment) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return scripts.setEnvironment(environment, this.socket);
-        });
+        return
     }
     _createFigures() {
         // Update player's figure for others
@@ -735,12 +731,14 @@ class FakePlayer extends getModule('events').EventEmitter {
         return __awaiter(this, void 0, void 0, function* () {
             console.log(`${this.username} has left the game.`);
             yield this._removePlayer();
-            this._log(`\\c6[SERVER]: \\c0${this.username} has left the server!`, true);
+            Game.messageAll(`\\c6[SERVER]: \\c0${this.username} has left the server!`, true);
             this.removeAllListeners();
             this._steps.forEach((loop) => {
                 clearInterval(loop);
             });
             this.destroyed = true;
+	    Game.fakePlayers.splice(Game.fakePlayers.indexOf(this), 1);
+	    Game.fakePlayers.splice(Game.players.indexOf(this), 1);
         });
     }
     /**@hidden */
