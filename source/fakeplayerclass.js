@@ -11,12 +11,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 //const events = getModule("events");
-const Game_1 = require("./../node_modules/node-hill/dist/class/Game.js").default
+const Game_1 = Game
 const scripts = require("./../node_modules/node-hill/dist/scripts/index.js")
-const PacketBuilder_1 = require("./../node_modules/node-hill/dist/net/PacketBuilder.js").default
+const PacketBuilder_1 = PacketBuilder
 const playerIds_1 = require("./../node_modules/node-hill/dist/net/BrickHillPackets/playerIds.js").default
-const Vector3_1 = require("./../node_modules/node-hill/dist/class/Vector3.js").default
-const Tool_1 = require("./../node_modules/node-hill/dist/class/Tool.js").default
+const Vector3_1 = Vector3
+const Tool_1 = Tool
 var CameraType;
 (function (CameraType) {
     /**The camera is fixed in place. You can set the position of it. */
