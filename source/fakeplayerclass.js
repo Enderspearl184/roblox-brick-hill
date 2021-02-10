@@ -875,5 +875,5 @@ FakePlayer.chatted = PlayerEvents.Chatted;
 FakePlayer.moved = PlayerEvents.Moved;
 FakePlayer.playerId = 0;
 	
-return exports
+return FakePlayer
 })()
