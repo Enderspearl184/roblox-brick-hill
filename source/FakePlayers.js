@@ -136,21 +136,10 @@ function handleFakePlayers(obj) {
 	for (let p of obj.players) {
 		let fakeplr=Game.fakePlayers.find((plr) => plr.netId==p.netId)
 		if (!fakeplr) {
-			let newpacket = new PacketBuilder("SendPlayers")
-			.write("uint8", 1)
-			//.write("uint32", p.netId)
-			.write("uint32", p.netId)
-			.write("string", p.username)
-			.write("uint32", 0)
-			.write("uint8", 0)
-			.write("uint8", 2)
-			newpacket.broadcast()
+			if (!fakePlayer) return
 			let fakeplayer=new fakePlayer()
-			if (Game.world.teams.length!==0) {
-				fakeplayer.setTeam(Game.world.teams[Math.floor(Math.random() * Game.world.teams.length)]);
-			}
+			Game._newPlayer(fakeplayer)
 			Game.fakePlayers.push(fakeplayer)
-			Game.allPlayers.push(fakeplayer)
 			fakeplayer.setPosition(pickSpawn())
 		} else {
 			if (!(p.alive===false)) {
@@ -313,15 +302,8 @@ function setFakePlayerColors(netid, colors) {
 }
 
 Game.messageAll=function(message,filtered) { //filtered isnt being used rn ill add it later
-	Game.allPlayers.forEach((p)=>{
-		p.message(message,filtered)
-	})
-    
-}
-
-Game.messageRealPlayers=function(message) {
 	Game.players.forEach((p)=>{
-		p.message(message)
+		p.message(message,filtered)
 	})
     
 }
@@ -334,7 +316,6 @@ Game.messageFakePlayers=function(message,filtered) {
 }
 
 Game.on("playerJoin", (p) => {
-	Game.allPlayers.push(p)
 	Game.messageFakePlayers(`\\c6[SERVER]: \\c0${p.username} has joined the server!`)
 	p.on("initialSpawn", () => {
 		let newpacket = new PacketBuilder("SendPlayers")
@@ -378,4 +359,3 @@ function generateRandomInteger(min, max) {
 }
 
 Game.fakePlayers=[]
-Game.allPlayers=[]
