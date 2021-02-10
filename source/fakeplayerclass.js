@@ -12,7 +12,38 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 //const events = getModule("events");
 const Game_1 = Game
-const scripts = require("./../node_modules/node-hill/dist/scripts/index.js")
+const scripts = {
+    // Gui
+    "topPrint": require("./../node_modules/node-hill/dist/scripts/gui/topPrint"),
+    "topPrintAll": require("./../node_modules/node-hill/dist/scripts/gui/topPrintAll"),
+    "centerPrint": require("./gui/centerPrint"),
+    "centerPrintAll": require("./../node_modules/node-hill/dist/scripts/gui/centerPrintAll"),
+    "bottomPrint": require("./../node_modules/node-hill/dist/scripts/bottomPrint"),
+    "bottomPrintAll": require("./../node_modules/node-hill/dist/scripts/gui/bottomPrintAll"),
+    "prompt": require("./../node_modules/node-hill/dist/scripts/gui/prompt"),
+    // Player
+    "kick": require("./player/kick"),
+    "sendAuthInfo": require("./player/sendAuthInfo"),
+    "setAvatar": require("./player/setAvatar"),
+    "getUserInfo": require("./player/getUserInfo"),
+    "getRankInGroup": require("./player/getRankInGroup"),
+    "playerOwnsAsset": require("./player/ownsAsset"),
+    // Team
+    "teamPacket": require("./team/team"),
+    // World
+    "setEnvironment": require("./world/setEnvironment"),
+    "loadBrk": require("./world/loadBrk"),
+    "loadBricks": require("./world/loadBricks"),
+    "deleteBricks": require("./world/deleteBricks"),
+    "addBrickProperties": require("./world/sendBrick"),
+    "pickSpawn": require("./world/pickSpawn"),
+    // Bot
+    "botPacket": require("./bot/bot"),
+    // Tool
+    "toolPacket": require("./tool/tool"),
+    // Set
+    "getSetDataFromUser": require("./set/getSetData")
+}
 const PacketBuilder_1 = PacketBuilder
 const playerIds_1 = require("./../node_modules/node-hill/dist/net/BrickHillPackets/playerIds.js").default
 const Vector3_1 = Vector3
