@@ -10,24 +10,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-    result["default"] = mod;
-    return result;
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const events_1 = getModule("events");
-const Game_1 = __importDefault(require("./../node_modules/node-hill/dist/class/Game"));
-const scripts = __importStar(require("./../node_modules/node-hill/dist/scripts"));
-const PacketBuilder_1 = __importStar(require("./../node_modules/node-hill/dist/net/PacketBuilder"));
-const playerIds_1 = __importDefault(require("./../node_modules/node-hill/dist/net/BrickHillPackets/playerIds"));
-const Vector3_1 = __importDefault(require("./../node_modules/node-hill/dist/class/Vector3"));
-const Tool_1 = __importDefault(require("./../node_modules/node-hill/dist/class/Tool"));
+	
+const events = getModule("events");
+const Game_1 = require("./../node_modules/node-hill/dist/class/Game").default
+const scripts = require("./../node_modules/node-hill/dist/scripts").default
+const PacketBuilder_1 = require("./../node_modules/node-hill/dist/net/PacketBuilder").default
+const playerIds_1 = require("./../node_modules/node-hill/dist/net/BrickHillPackets/playerIds").default
+const Vector3_1 = require("./../node_modules/node-hill/dist/class/Vector3").default
+const Tool_1 = require("./../node_modules/node-hill/dist/class/Tool").default
 var CameraType;
 (function (CameraType) {
     /**The camera is fixed in place. You can set the position of it. */
@@ -48,7 +38,7 @@ var PlayerEvents;
     PlayerEvents["Chatted"] = "chatted";
     PlayerEvents["Moved"] = "moved";
 })(PlayerEvents || (PlayerEvents = {}));
-class FakePlayer extends events_1.EventEmitter {
+class FakePlayer extends events.EventEmitter {
     constructor(data) {
 	this.socket={
 		write: function(data) {
