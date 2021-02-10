@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-	
+console.log("loading requires")
 const events = getModule("events");
 const Game_1 = require("./../node_modules/node-hill/dist/class/Game").default
 const scripts = require("./../node_modules/node-hill/dist/scripts").default
@@ -38,6 +38,7 @@ var PlayerEvents;
     PlayerEvents["Chatted"] = "chatted";
     PlayerEvents["Moved"] = "moved";
 })(PlayerEvents || (PlayerEvents = {}));
+console.log("creating class")
 class FakePlayer extends events.EventEmitter {
     constructor(data) {
 	this.socket={
@@ -864,6 +865,6 @@ FakePlayer.chatted = PlayerEvents.Chatted;
  */
 FakePlayer.moved = PlayerEvents.Moved;
 FakePlayer.playerId = 0;
-	
+console.log("end of script")
 return FakePlayer
 })()
