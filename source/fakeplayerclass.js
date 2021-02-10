@@ -11,12 +11,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 //const events = getModule("events");
-const Game_1 = require("./../node_modules/node-hill/dist/class/Game").default
-const scripts = require("./../node_modules/node-hill/dist/scripts").default
-const PacketBuilder_1 = require("./../node_modules/node-hill/dist/net/PacketBuilder").default
-const playerIds_1 = require("./../node_modules/node-hill/dist/net/BrickHillPackets/playerIds").default
-const Vector3_1 = require("./../node_modules/node-hill/dist/class/Vector3").default
-const Tool_1 = require("./../node_modules/node-hill/dist/class/Tool").default
+const Game_1 = require("./../node_modules/node-hill/dist/class/Game.js").default
+const scripts = require("./../node_modules/node-hill/dist/scripts/index.js")
+const PacketBuilder_1 = require("./../node_modules/node-hill/dist/net/PacketBuilder.js").default
+const playerIds_1 = require("./../node_modules/node-hill/dist/net/BrickHillPackets/playerIds.js").default
+const Vector3_1 = require("./../node_modules/node-hill/dist/class/Vector3.js").default
+const Tool_1 = require("./../node_modules/node-hill/dist/class/Tool.js").default
 var CameraType;
 (function (CameraType) {
     /**The camera is fixed in place. You can set the position of it. */
@@ -543,7 +543,6 @@ class FakePlayer extends getModule('events').EventEmitter {
             localBrick.socket = this.socket;
             this.localBricks.push(localBrick);
             const packet = new PacketBuilder_1.default(PacketBuilder_1.PacketEnums.SendBrick);
-            scripts.addBrickProperties(packet, localBrick);
             yield packet.send(this.socket);
             return localBrick;
         });
@@ -574,7 +573,7 @@ class FakePlayer extends getModule('events').EventEmitter {
      */
     setAvatar(userId) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield scripts.setAvatar(this, userId);
+            yield scripts.setAvatar(tfhis, userId);
             let packet = playerIds_1.default(this, "KLMNOPQUVW");
             return packet.broadcast();
         });
