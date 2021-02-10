@@ -128,7 +128,7 @@ function handleFakePlayers(obj) {
 	//remove gone players
 	for (let p of Game.fakePlayers) {
 		if (!obj.players.find((player) => player.netId==p.netId)) {
-			removeFakePlayer(p)
+			fake._left()
 		}
 	}
 
@@ -141,23 +141,22 @@ function handleFakePlayers(obj) {
 			Game._newPlayer(fakeplayer)
 			Game.fakePlayers.push(fakeplayer)
 			fakeplayer.setPosition(pickSpawn())
-		} else {
-			if (!(p.alive===false)) {
-				let fake=Game.fakePlayers.find((plr) => plr.netId==p.netId)
+		} else {	
+			if (p.alive) {
 				if (p.position)
-					setFakePlayerPosition(p.netId, {x:p.position.x,y:p.position.y,z:p.position.z,r:p.rotation})
+					fakeplr._updatePositionForOthers([p.position.x, p.position.y, p.position.z, p.rotation.z])
 				//if (p.rotation)
 				//	setFakePlayerRotation(p.netId, p.rotation)
 				if (p.colors)
 					setFakePlayerColors(p.netId, p.colors)
-				if (Game.fakePlayers.find((plr) => plr.netId==p.netId).alive==false) {
-					teleFakePlayer(fake)
-					fake.alive=true
-				}
-				setFakePlayerHealth(p.netId, false)
+				//if (Game.fakePlayers.find((plr) => plr.netId==p.netId).alive==false) {
+				//	teleFakePlayer(fake)
+				//	fake.alive=true
+				//}
+				//setFakePlayerHealth(p.netId, false)
 			} else {
-				Game.fakePlayers.find((plr) => plr.netId==p.netId).alive=false
-				setFakePlayerHealth(p.netId, true)
+				if (fakeplr.alive)
+					fakeplr.kill()
 			}
 		}
 	}
