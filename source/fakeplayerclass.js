@@ -11,7 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 console.log("loading requires")
-const events = getModule("events");
+//const events = getModule("events");
 const Game_1 = require("./../node_modules/node-hill/dist/class/Game").default
 const scripts = require("./../node_modules/node-hill/dist/scripts").default
 const PacketBuilder_1 = require("./../node_modules/node-hill/dist/net/PacketBuilder").default
