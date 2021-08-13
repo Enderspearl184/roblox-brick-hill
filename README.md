@@ -1,4 +1,4 @@
-still work in progress, no real schedule for when i add stuff
+probably not going to be completed, maybe someone else can finish it as procrastination happened
 How to get it running: 
 # step 1: node-hill
 
