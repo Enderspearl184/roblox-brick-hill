@@ -1,4 +1,4 @@
-probably not going to be completed, maybe someone else can finish it as procrastination happened
+OTHER AND BETTER VERSION AT (HERE)[https://github.com/Enderspearl184/roblox-brick-hill-socket]
 How to get it running: 
 # step 1: node-hill
 
