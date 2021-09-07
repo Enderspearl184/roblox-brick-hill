@@ -1,4 +1,4 @@
-OTHER AND BETTER VERSION AT (HERE)[https://github.com/Enderspearl184/roblox-brick-hill-socket]
+DIFFERENT BETTER VERSION THAT ACTUALLY TRIES TO EMULATE A NORMAL CLIENT SO IT CAN JOIN ALMOST ANY BRICK HILL GAME AT (HERE)[https://github.com/Enderspearl184/roblox-brick-hill-socket]
 How to get it running: 
 # step 1: node-hill
 
